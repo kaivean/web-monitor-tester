@@ -1,0 +1,67 @@
+{
+  "name": "web-monitor-tester",
+  "version": "0.1.0",
+  "description": "web监控测试",
+  "main": "dist/tester/main.js",
+  "bin": {
+    "wmt": "./dist/bin/wmt.js"
+  },
+  "scripts": {
+    "lint": "eslint ./**/*.ts",
+    "dev": "tsc -w --project .",
+    "test": "karma start karma.conf.ts",
+    "release_pre": "npm version patch",
+    "release": "rm -fr dist && npm run build && npm run lint && npm run test && npm publish",
+    "release_post": "git push origin master && git push origin --tags"
+  },
+  "author": "kaivean",
+  "license": "MIT",
+  "dependencies": {
+    "@types/md5": "^2.2.0",
+    "@types/puppeteer": "^3.0.1",
+    "@types/request": "^2.48.5",
+    "@types/swig": "0.0.29",
+    "chalk": "^2.4.2",
+    "chrome-har-capturer": "^0.13.7",
+    "commander": "^3.0.1",
+    "fs-extra": "^8.1.0",
+    "imageinfo": "^1.0.4",
+    "lighthouse": "^6.1.1",
+    "md5": "^2.2.1",
+    "moment": "^2.27.0",
+    "puppeteer": "^5.2.1",
+    "request": "^2.88.0",
+    "swig": "^1.4.2",
+    "webp-converter": "^2.2.3",
+    "worker-farm": "^1.7.0"
+  },
+  "devDependencies": {
+    "@ecomfe/eslint-config": "^3.2.0",
+    "@types/fs-extra": "^9.0.1",
+    "@types/glob": "^7.1.1",
+    "@types/jasmine": "^3.5.10",
+    "@types/node": "^12.6.8",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.20.1",
+    "jasmine-core": "^3.4.0",
+    "karma": "^4.3.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.2",
+    "karma-webpack": "^4.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
+  },
+  "keywords": [
+    "web",
+    "monitor",
+    "test",
+    "frontend monitor",
+    "performance monitor",
+    "exception monitor",
+    "lighthouse"
+  ]
+}

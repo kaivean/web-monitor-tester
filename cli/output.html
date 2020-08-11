@@ -1,0 +1,163 @@
+<html lang="en">
+    <head>
+        <title>评测结果</title>
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <style>
+            .screenshot-wrap-inner {
+                display: flex;
+            }
+            .screenshot-item {
+                flex: 1;
+                height: 200px;
+            }
+            .collapse-title {
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <h2>评测报告</h2>
+            <el-form class="form" ref="form" label-width="130px">
+                <el-form-item class="form-item form-item-url" label="URLs">
+                    <el-dropdown trigger="hover">
+                        <el-button type="primary">
+                            查看URLs<i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item v-for="item in option.urls" :key="item">
+                                <a :href="item" target="_blank">{{item}}</a>
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </el-form-item>
+                <el-form-item class="form-item" label="评测次数">
+                    <el-tag type="info">{{option.count}}</el-tag>
+                </el-form-item>
+                <el-form-item class="form-item" label="使用缓存">
+                    <el-tag type="info">{{option.cache ? '是' : '否'}}</el-tag>
+                </el-form-item>
+                <el-form-item class="form-item" label="UserAgent">
+                    <el-tag type="info">{{option.userAgent ? option.userAgent : '未设置'}}</el-tag>
+                </el-form-item>
+                <el-form-item class="form-item" label="Headers">
+                    <el-tag type="info" class="c-margin-left-small" v-for="(key,value) in option.extraHeader" :key="key">{{key}}:{{value}}</el-tag>
+                </el-form-item>
+                <el-form-item class="form-item" label="启用插件">
+                    <el-tag type="info" class="c-margin-left-small" v-for="item in option.plugins" :key="item">{{item}}</el-tag>
+                </el-form-item>
+                <el-form-item class="form-item" label="快照" v-if="screenshot">
+                    <div class="screenshot-wrap">
+                        <div class="screenshot-wrap-inner" >
+                            <el-image
+                                class="screenshot-item"
+                                :key="item.timing" v-for="item in screenshot"
+                                :src="item.data"
+                                :preview-src-list="screenshot.map(a => a.data)">
+                            </el-image>
+                        </div>
+                    </div>
+                </el-form-item>
+            </el-form>
+
+
+            <el-collapse v-model="activeNames">
+                <el-collapse-item :title="item.group" :key="item.group" v-for="item in metrics" :name="item.group">
+                    <template slot="title">
+                        <span class="collapse-title"><i class="el-icon-s-grid"></i>{{item.group}}</span>
+                    </template>
+                    <el-table
+                        :data="item.children"
+                        stripe
+                        style="width: 100%">
+                        <el-table-column
+                            prop="name"
+                            label="指标名称"
+                            width="400">
+                            <template slot-scope="scope">
+                                <el-tooltip placement="left-start">
+                                    <div slot="content" class="tooltip">
+                                        指标Key: {{scope.row.name}}
+                                    </div>
+                                    <span>{{scope.row.label ? scope.row.label : ( scope.row.name.replace('.-', ''))}}</span>
+                                </el-tooltip>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            prop="value"
+                            label="均值"
+                            width="120">
+                        </el-table-column>
+                        <el-table-column
+                            prop="stddev"
+                            label="标准差"
+                            width="120">
+                        </el-table-column>
+                        <el-table-column
+                            prop="dataPoints"
+                            label="数据点"
+                            width="120">
+                            <template slot="header" slot-scope="scope">
+                                <el-tooltip placement="top-start">
+                                    <div slot="content" class="tooltip">
+                                        数据集合是当前结果的多次评测（URL个数 * 评测次数）的数据集合
+                                    </div>
+                                    <span>数据集合<i class="el-icon-question c-gray"></i></span>
+                                </el-tooltip>
+                            </template>
+                            <template slot-scope="scope">
+                                <el-tooltip
+                                    placement="left"
+                                >
+                                    <div slot="content" class="tooltip">
+                                        数据点: {{scope.row.dataPoints.join(',  ')}}
+                                    </div>
+                                    <span class="el-icon-info"></span>
+                                </el-tooltip>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            prop="info"
+                            label="信息"
+                            width="120">
+                            <template slot-scope="scope">
+                                <el-tooltip
+                                    placement="left"
+                                >
+                                    <div slot="content" class="tooltip">
+                                        <div v-for="item in scope.row.info">{{item}}</div>
+                                    </div>
+                                    <span class="el-icon-info"></span>
+                                </el-tooltip>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-collapse-item>
+            </el-collapse>
+        </div>
+
+        <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+        <script>
+            var data = TPLDATA;
+
+            data.activeNames = data.metrics.map(function (item) {
+                return item.group;
+            });
+
+            var app = new Vue({
+                el: '#app',
+                data: data,
+                methods: {
+
+                }
+            });
+        </script>
+    </body>
+</html>
