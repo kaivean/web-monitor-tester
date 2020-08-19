@@ -30,7 +30,6 @@ export default async function main(opts: {[key: string]: any}, args: string[]) {
     if (opts.wiseSizeAmdJson && fs.existsSync(opts.wiseSizeAmdJson)) {
         wiseSizeAmdJson = await fs.readJSON(opts.wiseSizeAmdJson);
     }
-    console.log('wiseSizeAmdJson', wiseSizeAmdJson);
 
     const conf: TesterOption = {
         urls: args,

@@ -116,7 +116,7 @@ export default class ImgoptPlugin extends Plugin {
      * @param {} 浏览器实例
      * @param {} puppeteer
      */
-    async onLighthouseAfterPass(ctx: TesterContext) {
+    async onLighthouseAfterPass() {
 
     }
 

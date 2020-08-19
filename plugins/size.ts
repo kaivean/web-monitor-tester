@@ -19,7 +19,7 @@ export default class WiseSizePlugin extends Plugin {
      * 插件钩子，当评测过程-浏览器实例初始化后
      * @param {ctx: TesterContext} ctx 上下文
      */
-    async onInited(ctx: TesterContext) {
+    async onInited() {
 
     }
 

@@ -10,7 +10,7 @@ export default class Plugin {
 
     // }
 
-    // addMetric(metric: Metric) {
+    async empty() {
 
-    // }
+    }
 }

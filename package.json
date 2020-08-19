@@ -9,9 +9,10 @@
   "scripts": {
     "lint": "eslint ./**/*.ts",
     "dev": "tsc -w --project .",
+    "build": "tsc --project .",
     "test": "karma start karma.conf.ts",
     "release_pre": "npm version patch",
-    "release": "rm -fr dist && npm run build && npm run lint && npm run test && npm publish",
+    "release": "rm -fr dist && npm run build && npm run lint && npm publish",
     "release_post": "git push origin master && git push origin --tags"
   },
   "author": "kaivean",

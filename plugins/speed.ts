@@ -22,7 +22,7 @@ export default class LagPlugin extends Plugin {
      * @param {} 浏览器实例
      * @param {} puppeteer实例
      */
-    async onInited(ctx: TesterContext) {
+    async onInited() {
 
     }
 

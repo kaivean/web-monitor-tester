@@ -36,3 +36,23 @@ if (!error) {
     console.log('taskResults', taskResults);
 }
 ```
+
+## Development
+
+```bash
+# 进行watch 编译
+npm run dev
+npm link
+wmt -h
+
+# lint
+npm run lint
+
+# production编译，产出到dist
+npm run build
+
+# 发布npm包
+npm run release_pre
+npm run release
+npm run release_post
+```
