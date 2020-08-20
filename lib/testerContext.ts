@@ -39,7 +39,7 @@ export default class TesterContext {
     constructor(url: string, testerOption: TesterOption) {
         this.url = url;
         this.testerOption = testerOption;
-        const time = moment().format('YYYY-MM-DD_HH:mm:ss');
+        const time = moment().format('YYYY_MM_DD_HH_mm_ss');
         const rand = (Math.random() * 1000).toFixed();
         this.taskDir = getHomeDir(`${time}_${rand}_${md5(url)}`);
     }

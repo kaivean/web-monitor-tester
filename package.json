@@ -25,7 +25,7 @@
     "chalk": "^2.4.2",
     "chrome-har-capturer": "^0.13.7",
     "commander": "^3.0.1",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
     "imageinfo": "^1.0.4",
     "lighthouse": "^6.1.1",
     "md5": "^2.2.1",
