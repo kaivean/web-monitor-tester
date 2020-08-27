@@ -506,7 +506,7 @@ export default class WiseSizePlugin extends Plugin {
                     }
                     // 卡片要取均值
                     if (first.startsWith('card-')) {
-                        item._ = item._ / item._info.length
+                        item._ = item._ / item._info.length;
                     }
                     ctx.addMetric({
                         group: 'wiseSize',
