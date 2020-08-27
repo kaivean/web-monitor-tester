@@ -9,19 +9,8 @@ import webp from 'webp-converter';
 import TesterContext from '../lib/testerContext';
 
 function convert(file: string, newfile: string) {
-    return new Promise((resolve, reject) => {
-        let converter = file.toLowerCase().endsWith('.gif') ? webp.gwebp : webp.cwebp;
-        converter(file, newfile, '', (status: number, error: Error) => {
-            // if convertsion successful status will be '100'
-            // if conversion fails status will be '101'
-            if (error) {
-                reject(error);
-            }
-            else {
-                resolve();
-            }
-        });
-    });
+    let converter = file.toLowerCase().endsWith('.gif') ? webp.gwebp : webp.cwebp;
+    return converter(file, newfile, '');
 }
 
 function getSize(file: string) {
@@ -53,7 +42,9 @@ async function execTask(item: any) {
 
     try {
         await convert(item.file, optedPath);
-        ret.optedSize = getSize(optedPath);
+        if (fs.existsSync(optedPath)) {
+            ret.optedSize = getSize(optedPath);
+        }
     }
     catch (e) {
         console.error('Fail to convert to webp', e);

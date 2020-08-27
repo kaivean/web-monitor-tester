@@ -32,7 +32,7 @@
     "moment": "^2.27.0",
     "puppeteer": "^5.2.1",
     "request": "^2.88.0",
-    "webp-converter": "^2.2.3",
+    "webp-converter": "^2.3.0",
     "worker-farm": "^1.7.0"
   },
   "devDependencies": {

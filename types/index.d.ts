@@ -63,6 +63,6 @@ declare module 'lighthouse' {
 }
 
 declare module 'webp-converter' {
-    export function gwebp(file: string, newfile: string, opt: any, cb: any): any;
-    export function cwebp(file: string, newfile: string, opt: any, cb: any): any;
+    export function gwebp(file: string, newfile: string, opt: any): Promise<string>;
+    export function cwebp(file: string, newfile: string, opt: any): Promise<string>;
 }
