@@ -51,7 +51,7 @@ export default class WiseSizePlugin extends Plugin {
         const page = ctx.lighthousePage;
 
         // 插入脚本进行分析
-        const statData = await page.evaluate((amdJson: any[], sizeObj: any) => {
+        const {statData, cardNumObj} = await page.evaluate((amdJson: any[], sizeObj: any) => {
             performance.mark('wiseSizeStart');
             function getxpath(el: Element | null) {
                 if (!el) {
@@ -356,6 +356,7 @@ export default class WiseSizePlugin extends Plugin {
                 }
             }
 
+            let cardNumObj = {};
             // 获取卡片的html和data
             const cardRootEles = document.querySelectorAll('#results > .c-result');
             for (let index = 0; index < cardRootEles.length; index++) {
@@ -372,6 +373,11 @@ export default class WiseSizePlugin extends Plugin {
                 if (!cardName) {
                     continue;
                 }
+
+                if (!cardNumObj[cardName]) {
+                    cardNumObj[cardName] = 0;
+                }
+                cardNumObj[cardName]++;
 
                 let business = 'card-' + cardName;
                 addStatData(`${business}.html`, atomRootEle.innerHTML.length);
@@ -480,7 +486,10 @@ export default class WiseSizePlugin extends Plugin {
             performance.mark('wiseSizeEnd');
             performance.measure('wiseSizeHandleTime', 'wiseSizeStart', 'wiseSizeEnd');
 
-            return statData;
+            return {
+                statData,
+                cardNumObj,
+            };
         }, amdJson, sizeObj);
 
         for (const first of Object.keys(statData)) {
@@ -506,7 +515,10 @@ export default class WiseSizePlugin extends Plugin {
                     }
                     // 卡片要取均值
                     if (first.startsWith('card-')) {
-                        item._ = item._ / item._info.length;
+                        const cardName = first.split('.')[0].split('-')[1];
+                        if (cardNumObj[cardName]) {
+                            item._ = item._ / cardNumObj[cardName];
+                        }
                     }
                     ctx.addMetric({
                         group: 'wiseSize',
