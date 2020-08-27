@@ -40,9 +40,14 @@ async function execTask(item: any) {
         optedSize: 0,
         host: '',
     };
+    ret.optedSize = ret.originSize;
     const url = item.url as string;
     const urlObj = new URL(url);
     ret.host = urlObj.host + urlObj.pathname.split('/').slice(0, 2).join('/');
+
+    if (ret.originSize <= 0) {
+        return ret;
+    }
 
     const optedPath = `${item.file}.webp`;
 
@@ -61,6 +66,7 @@ export async function optimizeImage(fileItems: any[], ctx: TesterContext) {
     // 处理资源
     let info = {
         imgNum: 0, // 可优化的图片数量
+        imgs: [] as string[],
         imgOriginSize: 0, // 可优化的图片原始大小
         imgOptedSize: 0, // 可优化的图片优化后的大小
         imgOptedSizeDiff: 0, // 优化后减少多少
@@ -95,6 +101,11 @@ export async function optimizeImage(fileItems: any[], ctx: TesterContext) {
         info.imgNum++;
         info.imgOriginSize += row.originSize;
         info.imgOptedSize += row.optedSize;
+
+        // 该图片被优化了
+        if (row.originSize > row.optedSize) {
+            info.imgs.push(row.url);
+        }
 
         if (['image/jpeg', 'image/jpg'].includes(row.mimeType)) {
             info.imgJpgNum++;

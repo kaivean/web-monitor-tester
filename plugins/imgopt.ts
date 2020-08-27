@@ -133,7 +133,7 @@ export default class ImgoptPlugin extends Plugin {
         ctx.addMetric({
             group: 'imgopt',
             name: 'imgNum',
-            label: '数量',
+            label: '总数量',
             value: res.imgNum,
         });
         ctx.addMetric({
@@ -153,6 +153,7 @@ export default class ImgoptPlugin extends Plugin {
             name: 'imgOptedSizeDiff',
             label: '可优化大小',
             value: res.imgOptedSizeDiff,
+            info: res.imgs,
         });
     }
 }
