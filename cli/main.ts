@@ -31,6 +31,11 @@ export default async function main(opts: {[key: string]: any}, args: string[]) {
         wiseSizeAmdJson = await fs.readJSON(opts.wiseSizeAmdJson);
     }
 
+    let plugins = [];
+    if (opts.plugins) {
+        plugins = opts.plugins.split(',').map(item => item.trim());
+    }
+
     const conf: TesterOption = {
         urls: args,
         count: opts.count as number,
@@ -38,6 +43,7 @@ export default async function main(opts: {[key: string]: any}, args: string[]) {
         userAgent: opts.userAgent,
         extraHeader: extraHeader,
         cache: opts.cache,
+        plugins,
         errorCheckNode4: opts.errorCheckNode4,
         wiseSizeAmdJson,
         async onTask(res, finishedTaskNum, totalTaskNum) {

@@ -16,6 +16,7 @@ program
     .option('-e, --extra-header <extraHeader>', 'Define header')
     .option('-u, --user-agent <userAgent>', 'Define userAgent')
     .option('--cache', 'Define whether use cache')
+    .option('--plugins <plugins>', 'Define use which plugins, eg: speed, lag, imgopt, errorCheck, size, wiseSize')
     .option('--error-check-node4 <errorCheckNode4>', 'Only for plugin errorCheck, Define node 4.x executable bin path')
     .option('--wise-size-amd-json <wiseSizeAmdJson>', 'Only for plugin wiseSize, Define amdJson')
     .parse(process.argv);

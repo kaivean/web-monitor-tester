@@ -79,7 +79,7 @@ export default class WiseSizePlugin extends Plugin {
             }
 
             const resourceMatch = [
-                // base bunlde
+                // External Link bunlde
                 {
                     business: 'www-wise',
                     name: 'globalT',
@@ -141,6 +141,13 @@ export default class WiseSizePlugin extends Plugin {
                     match: /static\/js\/iphone\/async\/module_bundle/,
                 },
                 {
+                    business: 'ecom',
+                    name: 'hector',
+                    match: /hectorstatic\.baidu\.com/,
+                },
+
+                // AMD
+                {
                     business: 'atom',
                     name: 'alaUtil',
                     match: /\/se\/static\/js\/bundles\/ala-util/,
@@ -156,17 +163,10 @@ export default class WiseSizePlugin extends Plugin {
                     match: /static\/atom\/search-ui\//,
                 },
                 {
-                    business: 'ecom',
-                    name: 'hector',
-                    match: /hectorstatic\.baidu\.com/,
-                },
-
-                {
                     business: 'pmd',
                     name: 'font',
                     match: /static\/font\/pmd\/cicon/,
                 },
-
                 {
                     business: 'growth',
                     name: 'js',
@@ -330,7 +330,7 @@ export default class WiseSizePlugin extends Plugin {
                 }
 
                 statData[first]._ += value;
-                statData[first]._info = statData[first]._info.concat(infos);
+                statData[first]._info.push(infos);
 
                 if (second) {
                     if (!statData[first][second]) {
@@ -341,7 +341,7 @@ export default class WiseSizePlugin extends Plugin {
                     }
 
                     statData[first][second]._ += value;
-                    statData[first][second]._info = statData[first][second]._info.concat(infos);
+                    statData[first][second]._info.push(infos);
                 }
 
                 if (third) {
@@ -352,7 +352,7 @@ export default class WiseSizePlugin extends Plugin {
                         };
                     }
                     statData[first][second][third]._ += value;
-                    statData[first][second][third]._info = statData[first][second][third]._info.concat(infos);
+                    statData[first][second][third]._info.push(infos);
                 }
             }
 
@@ -485,23 +485,34 @@ export default class WiseSizePlugin extends Plugin {
 
         for (const first of Object.keys(statData)) {
             for (const second of Object.keys(statData[first])) {
+                let item;
+                let name = '';
                 if (second === '_') {
-                    ctx.addMetric({
-                        group: 'wiseSize',
-                        name: first,
-                        value: statData[first]._,
-                        info: statData[first]._info,
-                    });
+                    item = statData[first];
+                    name = first;
                 }
                 else if (second === '_info') {
 
                 }
                 else {
+                    item = statData[first][second];
+                    name = `${first}.${second}`;
+                }
+
+                if (item) {
+                    let infos = [];
+                    for (const info of item._info) {
+                        infos = infos.concat(info);
+                    }
+                    // 卡片要取均值
+                    if (first.startsWith('card-')) {
+                        item._ = item._ / item._info.length
+                    }
                     ctx.addMetric({
                         group: 'wiseSize',
-                        name: `${first}.${second}`,
-                        value: statData[first][second]._,
-                        info: statData[first][second]._info,
+                        name,
+                        value: item._,
+                        info: infos,
                     });
                 }
             }
