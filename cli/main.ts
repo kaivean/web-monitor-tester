@@ -44,7 +44,6 @@ export default async function main(opts: {[key: string]: any}, args: string[]) {
         extraHeader: extraHeader,
         cache: opts.cache,
         plugins,
-        errorCheckNode4: opts.errorCheckNode4,
         wiseSizeAmdJson,
         async onTask(res, finishedTaskNum, totalTaskNum) {
             logger.info(`Progress: ${finishedTaskNum}/${totalTaskNum}`);

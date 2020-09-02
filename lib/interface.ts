@@ -63,12 +63,6 @@ export interface TesterOption {
     onChild?: (child: ChildProcess) => Promise<void>;
 
     /**
-     * only for plugin errorCheck
-     * node 4.x 命令路径，比如：xxx/node4.8/bin/node
-     */
-    errorCheckNode4?: string;
-
-    /**
      * only for plugin wiseSize
      */
     wiseSizeAmdJson?: any[];
