@@ -148,9 +148,9 @@ export default class WiseSizePlugin extends Plugin {
 
                 // AMD
                 {
-                    business: 'atom',
-                    name: 'alaUtil',
-                    match: /\/se\/static\/js\/bundles\/ala-util/,
+                    business: 'search-ui', // 按路径匹配，要在atom业务之前匹配
+                    name: 'search-ui',
+                    match: /static\/atom\/search-ui\//,
                 },
                 {
                     business: 'atom',
@@ -158,9 +158,9 @@ export default class WiseSizePlugin extends Plugin {
                     match: /static\/atom\//,
                 },
                 {
-                    business: 'search-ui',
-                    name: 'search-ui',
-                    match: /static\/atom\/search-ui\//,
+                    business: 'atom',
+                    name: 'alaUtil',
+                    match: /\/se\/static\/js\/bundles\/ala-util/,
                 },
                 {
                     business: 'pmd',

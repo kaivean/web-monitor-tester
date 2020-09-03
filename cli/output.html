@@ -81,7 +81,17 @@
                                     <div slot="content" class="tooltip">
                                         指标Key: {{scope.row.name}}
                                     </div>
-                                    <span>{{scope.row.label ? scope.row.label : ( scope.row.name.replace('.-', ''))}}</span>
+                                    <span v-if="scope.row.label">
+                                    {{scope.row.label}}
+                                    </span>
+                                    <span v-else>
+                                        <span>{{scope.row.name.split('.')[0]}}</span>
+                                        <el-tag
+                                            v-if="scope.row.name.replace('.-', '').split('.').length > 1"
+                                        >
+                                            {{scope.row.name.replace('.-', '').split('.')[1]}}
+                                        </el-tag>
+                                    </span>
                                 </el-tooltip>
                             </template>
                         </el-table-column>
@@ -113,7 +123,7 @@
                                     placement="left"
                                 >
                                     <div slot="content" class="tooltip">
-                                        数据点: {{scope.row.dataPoints.join(',  ')}}
+                                        数据点({{scope.row.dataPoints.length}}个): {{scope.row.dataPoints.join(',  ')}}
                                     </div>
                                     <span class="el-icon-info"></span>
                                 </el-tooltip>

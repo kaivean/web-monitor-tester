@@ -138,9 +138,15 @@ class Task {
                         /* eslint-disable @typescript-eslint/no-var-requires */
                         /* eslint-disable @typescript-eslint/no-require-imports */
                         // eslint-disable-next-line import/no-dynamic-require
-                        const PlugClass = require(plugPath);
+                        let PlugClass = require(plugPath);
+                        if (PlugClass.default) {
+                            PlugClass = PlugClass.default;
+                        }
                         new PlugClass(); // 尝试初始化下，有报错及时报出
-                        Scheduler.register(PlugClass.name.replace('Plugin').toLowerCase(), PlugClass);
+                        let name: string = PlugClass.name.replace('Plugin', '');
+                        // 首字母小写
+                        name = name.substring(0, 1).toLowerCase() + name.substring(1);
+                        Scheduler.register(name, PlugClass);
                     }
                     catch (e) {
                         logger.error(`Failed to init plug: ${plugPath}`);

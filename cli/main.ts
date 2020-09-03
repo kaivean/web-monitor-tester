@@ -36,14 +36,20 @@ export default async function main(opts: {[key: string]: any}, args: string[]) {
         plugins = opts.plugins.split(',').map(item => item.trim());
     }
 
+    let customPluginPaths = [];
+    if (opts.customPluginPaths) {
+        customPluginPaths = opts.customPluginPaths.split(',').map(item => item.trim());
+    }
+
     const conf: TesterOption = {
         urls: args,
-        count: opts.count as number,
-        concurrency: opts.concurrency as number,
+        count: (opts.count ? +opts.count : 1),
+        concurrency: (opts.concurrency ? +opts.concurrency : 1),
         userAgent: opts.userAgent,
         extraHeader: extraHeader,
         cache: opts.cache,
         plugins,
+        customPluginPaths,
         wiseSizeAmdJson,
         async onTask(res, finishedTaskNum, totalTaskNum) {
             logger.info(`Progress: ${finishedTaskNum}/${totalTaskNum}`);

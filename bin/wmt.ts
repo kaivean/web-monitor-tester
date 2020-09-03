@@ -16,6 +16,8 @@ program
     .option('-e, --extra-header <extraHeader>', 'Define header')
     .option('-u, --user-agent <userAgent>', 'Define userAgent')
     .option('--cache', 'Define whether use cache')
+    .option('--concurrency <concurrency>', 'run concurrency number')
+    .option('--custom-plugin-paths <customPluginPaths>', 'custom plugin paths, splitted by ","')
     .option('--plugins <plugins>', 'Define use which plugins, eg: speed, lag, imgopt, errorCheck, size, wiseSize')
     .option('--wise-size-amd-json <wiseSizeAmdJson>', 'Only for plugin wiseSize, Define amdJson')
     .parse(process.argv);

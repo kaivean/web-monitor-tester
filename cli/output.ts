@@ -80,7 +80,7 @@ export default async function (taskResults: TaskResult[], option: TesterOption) 
         screenshot: taskResults[0].screenShot,
     }));
 
-    const time = moment().format('YYYY-MM-DD_HH:mm:ss');
+    const time = moment().format('YYYY_MM_DD_HH_mm_ss');
     const name = `${md5(option.urls.join(','))}_${time}.html`;
     fs.writeFileSync(name, html);
 
