@@ -45,7 +45,18 @@ export default class WiseSizePlugin extends Plugin {
         const records = ctx.passLoadData.networkRecords;
         const sizeObj = {};
         for (const record of records) {
-            sizeObj[record.url] = record.resourceSize;
+            if (!record.url.startsWith('http')) {
+                continue;
+            }
+            if (record.resourceType === 'Document') {
+                continue;
+            }
+
+            sizeObj[record.url] = {
+                name: record.url,
+                decodedBodySize: record.resourceSize,
+                initiatorType: record.resourceType === 'Image' ? 'img' : 'other',
+            };
         }
 
         const page = ctx.lighthousePage;
@@ -412,8 +423,8 @@ export default class WiseSizePlugin extends Plugin {
 
             // 获取network资源
             // const {0: mainPageTiming} = performance.getEntriesByType('navigation');
-            const resourceTimings = performance.getEntriesByType('resource');
-
+            // const resourceTimings = performance.getEntriesByType('resource');
+            const resourceTimings = Object.keys(sizeObj).map(name => sizeObj[name]);
             const handleTiming = (timing: PerformanceResourceTiming, realSize: number) => {
                 for (const item of resourceMatch) {
                     if (typeof item.match === 'function') {
@@ -440,11 +451,7 @@ export default class WiseSizePlugin extends Plugin {
 
                 // 因为在浏览器获取的resourceTimings的decodedBodySize受到跨域影响，有些资源是拿不到size的
                 // 所以把lighthouse采集的真实size传过来
-                let realSize: number = sizeObj[timing.name] as number;
-
-                if (!realSize) {
-                    realSize = timing.decodedBodySize;
-                }
+                let realSize = timing.decodedBodySize;
 
                 if (!realSize) {
                     console.log('未有该请求真实size', timing.name);
