@@ -1,6 +1,6 @@
 {
   "name": "web-monitor-tester",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "web监控测试",
   "main": "dist/tester/main.js",
   "bin": {
