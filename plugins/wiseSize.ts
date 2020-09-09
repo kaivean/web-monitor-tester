@@ -69,12 +69,16 @@ export default class WiseSizePlugin extends Plugin {
                     return {};
                 }
                 const xpath: string[] = [];
-                let tplName = 'nocard';
+                let tplName = '';
                 while (el && el.nodeType === 1 && el !== el.parentNode) {
                     xpath.push(el.tagName.toLowerCase());
                     // 到卡片根元素就中止
                     if (el.classList.contains('c-result') && el.getAttribute('tpl')) {
                         tplName = el.getAttribute('tpl') || '';
+                        break;
+                    }
+                    else if (el.classList.contains('ec_wise_ad')) {
+                        tplName = 'ecom';
                         break;
                     }
 
@@ -151,10 +155,17 @@ export default class WiseSizePlugin extends Plugin {
                     name: 'moduleBundle',
                     match: /static\/js\/iphone\/async\/module_bundle/,
                 },
+
+
                 {
                     business: 'ecom',
                     name: 'hector',
                     match: /hectorstatic\.baidu\.com/,
+                },
+                {
+                    business: 'ecom',
+                    name: 'static',
+                    match: /\/static\/ecom\//,
                 },
 
                 // AMD
@@ -274,13 +285,15 @@ export default class WiseSizePlugin extends Plugin {
                         const cardName = data.tplName;
                         let business = 'www-wise';
                         let name = 'img';
-                        if (cardName) {
+
+                        if (cardName === 'ecom') {
+                            business = 'ecom';
+                        }
+                        else if (cardName) {
                             name = 'img';
                             business = 'card-' + cardName;
-                            // if (['h5_mobile'].includes(cardName)) {
-                            //     business = 'www';
-                            // }
                         }
+
 
                         return {
                             business,

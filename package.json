@@ -15,6 +15,11 @@
     "release": "rm -fr dist && npm run build && npm run lint && npm publish",
     "release_post": "git push origin master && git push origin --tags"
   },
+  "homepage": "https://github.com/kaivean/web-monitor-tester",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaivean/web-monitor-tester.git"
+  },
   "author": "kaivean",
   "license": "MIT",
   "dependencies": {
