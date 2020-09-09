@@ -164,6 +164,11 @@ export default class WiseSizePlugin extends Plugin {
                     match: /static\/atom\/search-ui\//,
                 },
                 {
+                    business: 'lego',
+                    name: 'lego',
+                    match: /static\/atom\/lego/,
+                },
+                {
                     business: 'atom',
                     name: 'atom',
                     match: /static\/atom\//,
