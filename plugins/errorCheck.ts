@@ -18,7 +18,10 @@ interface ScriptData {
 function ignoreMessage(text: string, url: string) {
     const filters = [
         'http://m.baidu.com/rec_err/index.html',
+        'https://m.baidu.com/sugrec?',
         'Not allowed to launch \'baiduboxapp:',
+        'has been blocked by CORS policy',
+        'Failed to load resource: net::ERR_FAILED',
         'Failed to launch \'baiduboxapp:',
         'Refused to frame \'\' because it violates the following Content Security Policy directive',
     ];
@@ -135,6 +138,7 @@ export default class ErrorCheckPlugin extends Plugin {
                 if (ignoreMessage(item.entry.text, item.entry.url || '')) {
                     continue;
                 }
+                console.log(item.entry.text);
                 num++;
                 info.push(`${item.entry.text}[${item.entry.url || ''}]`);
             }
