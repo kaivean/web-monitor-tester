@@ -15,6 +15,7 @@ program
     .option('-c, --count <count>', 'Count for running the url')
     .option('-e, --extra-header <extraHeader>', 'Define header')
     .option('-u, --user-agent <userAgent>', 'Define userAgent')
+    .option('--scroll', 'Define whether scroll page')
     .option('--cache', 'Define whether use cache')
     .option('--concurrency <concurrency>', 'run concurrency number')
     .option('--custom-plugin-paths <customPluginPaths>', 'custom plugin paths, splitted by ","')

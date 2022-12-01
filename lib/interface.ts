@@ -30,6 +30,10 @@ export interface TesterOption {
      * userAgent
      */
     userAgent?: string;
+    /**
+     * 是否执行滚动
+     */
+    scroll?: boolean;
 
     /**
      * 是否在有缓存的前提测试
