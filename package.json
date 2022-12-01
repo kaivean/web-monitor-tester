@@ -35,7 +35,7 @@
     "lighthouse": "^6.1.1",
     "md5": "^2.2.1",
     "moment": "^2.27.0",
-    "puppeteer": "^5.2.1",
+    "puppeteer": "^13.6.0",
     "request": "^2.88.0",
     "uglify-js": "^3.10.3",
     "webp-converter": "^2.3.0",

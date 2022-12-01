@@ -46,6 +46,7 @@ export default async function main(opts: {[key: string]: any}, args: string[]) {
         count: (opts.count ? +opts.count : 1),
         concurrency: (opts.concurrency ? +opts.concurrency : 1),
         userAgent: opts.userAgent,
+        scroll: opts.scroll,
         extraHeader: extraHeader,
         cache: opts.cache,
         plugins,
